@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 64" width="260" height="64" fill="none">
+  <defs>
+    <linearGradient id="dmShieldBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#142B4A" />
+      <stop offset="100%" stop-color="#0B1728" />
+    </linearGradient>
+    <linearGradient id="dmBorderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F9D92" />
+      <stop offset="100%" stop-color="#2563EB" />
+    </linearGradient>
+    <linearGradient id="dmCrossGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#E2E8F0" />
+    </linearGradient>
+  </defs>
+
+  <!-- Mini Shield Icon (Left) -->
+  <g transform="translate(4, 4)">
+    <path d="M28 4 C42 4 50 10 50 26 C50 41 38 50 28 56 C18 50 6 41 6 26 C6 10 14 4 28 4 Z" 
+          fill="url(#dmShieldBg)" stroke="url(#dmBorderGrad)" stroke-width="2" stroke-linejoin="round"/>
+    <!-- Cross -->
+    <rect x="24" y="17" width="8" height="22" rx="4" fill="url(#dmCrossGrad)"/>
+    <rect x="17" y="24" width="22" height="8" rx="4" fill="url(#dmCrossGrad)"/>
+    <!-- AI Core -->
+    <circle cx="28" cy="28" r="4" fill="#0F9D92"/>
+    <circle cx="28" cy="28" r="1.8" fill="#FFFFFF"/>
+    <!-- Accent spark -->
+    <circle cx="39" cy="20" r="1.5" fill="#2563EB"/>
+  </g>
+
+  <!-- Wordmark Text (Right) -->
+  <text x="68" y="36" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-size="24" font-weight="700" fill="#F8FAFC" letter-spacing="-0.03em">Insure<tspan fill="#0F9D92" font-weight="800">IQ</tspan></text>
+  <text x="68" y="49" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-size="8.5" font-weight="600" fill="#CBD5E1" letter-spacing="0.08em">HEALTH COVERAGE INTELLIGENCE</text>
+</svg>

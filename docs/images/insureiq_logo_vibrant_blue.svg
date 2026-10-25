@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 60" width="260" height="60" fill="none">
+  <defs>
+    <!-- Deep Shield Fill for Vibrant Blue Canvas -->
+    <linearGradient id="vbShieldBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#004D99" />
+      <stop offset="100%" stop-color="#00356B" />
+    </linearGradient>
+    <linearGradient id="vbBorderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="60%" stop-color="#80D0FF" />
+      <stop offset="100%" stop-color="#00E5D0" />
+    </linearGradient>
+    <linearGradient id="vbCrossGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#E6F4FF" />
+    </linearGradient>
+  </defs>
+
+  <!-- Shield Icon (Left) -->
+  <g transform="translate(2, 2)">
+    <path d="M28 4 C42 4 50 10 50 26 C50 41 38 50 28 56 C18 50 6 41 6 26 C6 10 14 4 28 4 Z" 
+          fill="url(#vbShieldBg)" stroke="url(#vbBorderGrad)" stroke-width="2.2" stroke-linejoin="round"/>
+    <!-- Healthcare Cross -->
+    <rect x="24" y="17" width="8" height="22" rx="4" fill="url(#vbCrossGrad)"/>
+    <rect x="17" y="24" width="22" height="8" rx="4" fill="url(#vbCrossGrad)"/>
+    <!-- Central AI Node -->
+    <circle cx="28" cy="28" r="4.2" fill="#00E5D0"/>
+    <circle cx="28" cy="28" r="1.8" fill="#FFFFFF"/>
+    <!-- Modern Insight Spark -->
+    <circle cx="39" cy="19" r="1.6" fill="#FFFFFF"/>
+  </g>
+
+  <!-- Wordmark Text (Right) -->
+  <text x="64" y="34" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-size="24" font-weight="800" fill="#FFFFFF" letter-spacing="-0.03em">Insure<tspan fill="#00E5D0" font-weight="800">IQ</tspan></text>
+  <text x="64" y="47" font-family="'Plus Jakarta Sans', system-ui, -apple-system, sans-serif" font-size="8.2" font-weight="700" fill="#E1EFFF" letter-spacing="0.08em">HEALTH COVERAGE INTELLIGENCE</text>
+</svg>

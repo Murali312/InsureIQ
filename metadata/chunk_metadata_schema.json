@@ -1,0 +1,23 @@
+{
+  "source_id": "stable unique source identifier",
+  "publisher": "official issuing organization",
+  "insurer_id": "insurer slug or null for general/regulatory sources",
+  "product_name": "exact product name or null",
+  "product_uin": "product UIN if present, otherwise null",
+  "document_type": "regulation|circular|policy_wording|CIS|claim_guide|general_faq|insurer_directory",
+  "document_title": "exact official title",
+  "document_version": "exact version/revision or null",
+  "published_date": "YYYY-MM-DD or null",
+  "effective_from": "YYYY-MM-DD or null",
+  "effective_to": "YYYY-MM-DD or null",
+  "retrieved_at_utc": "ISO-8601 timestamp",
+  "source_url": "exact official source URL",
+  "sha256": "checksum of original downloaded file",
+  "page_number": "integer or null",
+  "section_path": "heading hierarchy",
+  "jurisdiction": "IN",
+  "language": "en",
+  "status": "current|superseded|under_review",
+  "content_type": "general_faq|regulatory|insurer_product|claims_process",
+  "is_official_source": "boolean"
+}

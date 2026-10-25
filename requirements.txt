@@ -1,0 +1,15 @@
+# India Health Insurance AI Agent Dependencies
+streamlit>=1.35.0
+pydantic>=2.7.0
+pydantic-settings>=2.2.0
+python-dotenv>=1.0.1
+chromadb>=0.5.0
+openai>=1.30.0
+sentence-transformers>=3.0.0
+torch>=2.2.0
+pypdf>=4.2.0
+requests>=2.31.0
+beautifulsoup4>=4.12.3
+pytest>=8.1.0
+pytest-mock>=3.14.0
+tiktoken>=0.7.0

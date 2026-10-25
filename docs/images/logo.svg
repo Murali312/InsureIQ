@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" fill="none">
+  <defs>
+    <!-- Deep Navy to Slate Gradient -->
+    <linearGradient id="iqShieldBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#142B4A" />
+      <stop offset="100%" stop-color="#0B1728" />
+    </linearGradient>
+
+    <!-- Refined Teal and Brand Blue Border Gradient -->
+    <linearGradient id="iqBorderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F9D92" />
+      <stop offset="60%" stop-color="#2563EB" />
+      <stop offset="100%" stop-color="#0D9488" />
+    </linearGradient>
+
+    <!-- Sparkle Gradient -->
+    <linearGradient id="iqSparkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFFFFF" />
+      <stop offset="100%" stop-color="#E2E8F0" />
+    </linearGradient>
+  </defs>
+
+  <!-- Subtle Outer Shield Drop -->
+  <path d="M60 12 C88 12 104 22 104 52 C104 82 78 100 60 110 C42 100 16 82 16 52 C16 22 32 12 60 12 Z" 
+        fill="#0F9D92" opacity="0.12" />
+
+  <!-- Primary Protection Shield -->
+  <path d="M60 14 C86 14 100 24 100 52 C100 79 76 96 60 106 C44 96 20 79 20 52 C20 24 34 14 60 14 Z" 
+        fill="url(#iqShieldBg)" stroke="url(#iqBorderGrad)" stroke-width="2.5" stroke-linejoin="round"/>
+
+  <!-- Inner Concentric Precision Ring -->
+  <path d="M60 22 C80 22 92 30 92 52 C92 72 72 87 60 95 C48 87 28 72 28 52 C28 30 40 22 60 22 Z" 
+        fill="none" stroke="#0F9D92" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.45"/>
+
+  <!-- Health & Protection Cross (Geometric, Clean) -->
+  <rect x="54" y="38" width="12" height="40" rx="6" fill="url(#iqSparkGrad)"/>
+  <rect x="40" y="52" width="40" height="12" rx="6" fill="url(#iqSparkGrad)"/>
+
+  <!-- Central Intelligence AI Node -->
+  <circle cx="60" cy="58" r="6.5" fill="#0F9D92" />
+  <circle cx="60" cy="58" r="3" fill="#FFFFFF" />
+
+  <!-- Modern AI Spark / Insight Nodes -->
+  <path d="M60 28 L61.5 32 L65 33 L61.5 34 L60 38 L58.5 34 L55 33 L58.5 32 Z" fill="#0F9D92" />
+  <circle cx="80" cy="46" r="2" fill="#2563EB" />
+  <circle cx="40" cy="46" r="2" fill="#0F9D92" />
+  <circle cx="60" cy="88" r="2" fill="#0F9D92" opacity="0.8" />
+</svg>
