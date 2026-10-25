@@ -279,13 +279,8 @@ External dependencies may include a language model API and an embedding provider
 
 ### Step-by-Step Processing Lifecycle
 
-```
-[Raw Documents] ──> [Extractors] ──> [Recursive Chunker] ──> [Embeddings] ──> [ChromaDB Index]
-                                                                                     │
-[User Query]    ──> [Sanitize]   ──> [Intent Classifier] ──> [Query Embedding] ─────┘
-                                                                     │
-[Cited Response] <── [Streamlit UI] <── [LLM Generation] <── [Relevance Filter]
-```
+<img width="1312" height="1199" alt="image" src="https://github.com/user-attachments/assets/6886b86f-7e9d-408f-af7c-64a9bcfec77f" />
+
 
 1. **Document Loading:** Documents in `knowledge/` are validated against `metadata/source_registry.csv`.
 2. **Text Extraction:** `extract_text_from_file()` extracts raw text from Markdown, HTML, or PDF files and computes SHA-256 content hashes.
