@@ -225,83 +225,9 @@ OPENAI_EMBEDDING_MODEL=text-embedding-3-small
 ## 6. System Architecture
 
 ### Architecture Diagram
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/be36f697-f3c7-4fd8-9972-c99463607f4b" />
 
-```mermaid
-flowchart TD
-    subgraph Client["User Client Layer"]
-        Browser["User Web Browser"]
-    end
 
-    subgraph Presentation["Streamlit Frontend (app.py)"]
-        UI_Sidebar["Vibrant Blue Sidebar (#0077D9)"]
-        UI_Chat["Consultation Chat View (#DFEFF7 Composer)"]
-        UI_Modules["Compare Plans / Senior Care / Coverage Guide"]
-        UI_Session["Session State & Active View Routing"]
-    end
-
-    subgraph Security["Security & Pre-Flight Layer (src/security.py)"]
-        Sanitizer["Input Sanitizer & Length Guard"]
-        SSRF["SSRF Guard & Domain Allowlist"]
-        ContextFence["Untrusted Context XML Fence"]
-    end
-
-    subgraph Orchestration["Agent Orchestration (src/agent/)"]
-        Agent["HealthInsuranceAgent (orchestrator.py)"]
-        Classifier["IntentClassifier (classifier.py)"]
-        Prompts["Grounded Prompt Engine (prompts.py)"]
-    end
-
-    subgraph Retrieval["Retrieval Abstraction (src/retrieval/)"]
-        BaseEngine["BaseRetrievalEngine (Interface)"]
-        ChromaEngine["ChromaRetrievalEngine (chroma_engine.py)"]
-        BedrockEngine["BedrockKnowledgeBaseEngine (Optional AWS)"]
-        EmbeddingFactory["Embedding Provider Factory (embeddings.py)"]
-    end
-
-    subgraph VectorDB["Persistent Vector Store (vector_store/chroma)"]
-        ChromaStore[("ChromaDB Collection: india_health_insurance_kb")]
-    end
-
-    subgraph Ingestion["Ingestion Pipeline (src/ingestion/)"]
-        Extractors["Text Extractors (PDF, HTML, MD)"]
-        Chunker["Header-Aware Token Chunker (~500 tokens)"]
-        Registry["Source Registry (metadata/source_registry.csv)"]
-        Pipeline["Ingestion Pipeline (pipeline.py)"]
-    end
-
-    subgraph External["External AI & Tool Services"]
-        OpenAIChat["OpenAI Chat API (gpt-4o-mini)"]
-        OpenAIEmb["OpenAI Embeddings (text-embedding-3-small)"]
-        MockCustomer["Synthetic Customer Service (customer_mock.py)"]
-    end
-
-    Browser <--> UI_Chat
-    Browser <--> UI_Modules
-    UI_Sidebar --> UI_Session
-    UI_Session --> UI_Chat
-    
-    UI_Chat --> Sanitizer
-    Sanitizer --> Agent
-    Agent --> Classifier
-
-    Classifier -->|personal_claim_policy| MockCustomer
-    Classifier -->|product_specific unverified| Prompts
-    Classifier -->|general_faq / regulatory| BaseEngine
-
-    BaseEngine --> ChromaEngine
-    BaseEngine -.-> BedrockEngine
-    ChromaEngine --> EmbeddingFactory
-    EmbeddingFactory --> OpenAIEmb
-    ChromaEngine <--> ChromaStore
-
-    Pipeline --> Extractors --> Chunker --> EmbeddingFactory --> ChromaStore
-    Registry --> Pipeline
-
-    ChromaEngine --> Agent
-    Agent --> ContextFence --> OpenAIChat
-    OpenAIChat --> UI_Chat
-    MockCustomer -->|SYNTHETIC DATA BANNER| UI_Chat
-```
 
 ### Component Flow Description
 1. **User Interaction:** The user submits a natural-language query through the light sky blue composer (`#DFEFF7`).
