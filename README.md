@@ -148,16 +148,9 @@ Following the landmark **May 2024 IRDAI Master Circular reforms**—which elimin
 
 ## 3. Screenshots & Visual Gallery
 
-All vector brand assets and screenshot guidelines are maintained in the [`docs/images/`](docs/images/) directory.
+All vector brand assets and screenshot guidelines are maintained in the [`docs/screenshots/`](docs/screenshots/) directory.
 
-| View | Description | Image Reference |
-| :--- | :--- | :--- |
-| **Consultation Home** | Main consultation view with vibrant blue sidebar (`#0077D9`), white hero New Chat button, 6 welcome prompt cards, and light sky blue composer. | `![InsureIQ Home](docs/images/insureiq_logo_sidebar.svg)` |
-| **Interactive Q&A** | Grounded response with intent classification badge, timestamp, and clickable source citation cards. | `![InsureIQ Q&A](docs/images/logo.svg)` |
-| **Compare Plans** | Multi-select insurer filter and side-by-side feature matrix across 6 major insurers. | `![Compare Plans](docs/images/insureiq_logo_vibrant_blue.svg)` |
-| **Light Composer** | Close-up of `#DFEFF7` chat input, neutral `#D4E2EA` border, and borderless `#0077D9` send arrow. | `![Light Composer](docs/images/insureiq_logo_light.svg)` |
-
-> *To capture and contribute genuine screenshots from your local running instance, follow the standardized guide in [`docs/images/README.md`](docs/images/README.md).*
+> *To capture and contribute genuine screenshots from your local running instance, follow the standardized guide in [`docs/screenshots/README.md`](docs/screenshots/README.md).*
 
 ---
 
