@@ -218,94 +218,61 @@ OPENAI_EMBEDDING_MODEL=text-embedding-3-small
 ## 6. System Architecture
 
 ### Architecture Diagram
+<img width="1536" height="1024" alt="image" src="https://github.com/user-attachments/assets/be36f697-f3c7-4fd8-9972-c99463607f4b" />
 
-```mermaid
-flowchart TD
-    subgraph Client["User Client Layer"]
-        Browser["User Web Browser"]
-    end
 
-    subgraph Presentation["Streamlit Frontend (app.py)"]
-        UI_Sidebar["Vibrant Blue Sidebar (#0077D9)"]
-        UI_Chat["Consultation Chat View (#DFEFF7 Composer)"]
-        UI_Modules["Compare Plans / Senior Care / Coverage Guide"]
-        UI_Session["Session State & Active View Routing"]
-    end
 
-    subgraph Security["Security & Pre-Flight Layer (src/security.py)"]
-        Sanitizer["Input Sanitizer & Length Guard"]
-        SSRF["SSRF Guard & Domain Allowlist"]
-        ContextFence["Untrusted Context XML Fence"]
-    end
+### Architecture Overview
 
-    subgraph Orchestration["Agent Orchestration (src/agent/)"]
-        Agent["HealthInsuranceAgent (orchestrator.py)"]
-        Classifier["IntentClassifier (classifier.py)"]
-        Prompts["Grounded Prompt Engine (prompts.py)"]
-    end
+InsureIQ follows a modular, Retrieval-Augmented Generation (RAG) architecture that combines document retrieval with large language model (LLM) capabilities to provide context-aware answers to health insurance questions. The architecture separates the user interface, application logic, knowledge retrieval, AI response generation, and data storage into distinct logical layers, making the system easier to understand, maintain, and extend.
 
-    subgraph Retrieval["Retrieval Abstraction (src/retrieval/)"]
-        BaseEngine["BaseRetrievalEngine (Interface)"]
-        ChromaEngine["ChromaRetrievalEngine (chroma_engine.py)"]
-        BedrockEngine["BedrockKnowledgeBaseEngine (Optional AWS)"]
-        EmbeddingFactory["Embedding Provider Factory (embeddings.py)"]
-    end
+#### 1. User and Presentation Layer
 
-    subgraph VectorDB["Persistent Vector Store (vector_store/chroma)"]
-        ChromaStore[("ChromaDB Collection: india_health_insurance_kb")]
-    end
+The presentation layer provides the interface through which users interact with InsureIQ. Built using Streamlit, it allows users to submit insurance-related questions, view responses, and access relevant source references through a web browser without installing software locally.
 
-    subgraph Ingestion["Ingestion Pipeline (src/ingestion/)"]
-        Extractors["Text Extractors (PDF, HTML, MD)"]
-        Chunker["Header-Aware Token Chunker (~500 tokens)"]
-        Registry["Source Registry (metadata/source_registry.csv)"]
-        Pipeline["Ingestion Pipeline (pipeline.py)"]
-    end
+#### 2. Application and Orchestration Layer
 
-    subgraph External["External AI & Tool Services"]
-        OpenAIChat["OpenAI Chat API (gpt-4o-mini)"]
-        OpenAIEmb["OpenAI Embeddings (text-embedding-3-small)"]
-        MockCustomer["Synthetic Customer Service (customer_mock.py)"]
-    end
+This layer coordinates the application's workflow. It handles incoming requests, manages conversation context where implemented, prepares prompts, invokes the RAG pipeline, and formats the final response for display. It acts as the central coordination point between the user interface, knowledge retrieval components, and AI services.
 
-    Browser <--> UI_Chat
-    Browser <--> UI_Modules
-    UI_Sidebar --> UI_Session
-    UI_Session --> UI_Chat
-    
-    UI_Chat --> Sanitizer
-    Sanitizer --> Agent
-    Agent --> Classifier
+#### 3. Knowledge Retrieval Layer
 
-    Classifier -->|personal_claim_policy| MockCustomer
-    Classifier -->|product_specific unverified| Prompts
-    Classifier -->|general_faq / regulatory| BaseEngine
+The retrieval layer identifies relevant information from the indexed insurance knowledge base. The user's question is converted into a vector embedding, which is used to perform a similarity search against the ChromaDB vector store. Relevant document chunks and their associated metadata are retrieved and passed to the response-generation workflow as supporting context.
 
-    BaseEngine --> ChromaEngine
-    BaseEngine -.-> BedrockEngine
-    ChromaEngine --> EmbeddingFactory
-    EmbeddingFactory --> OpenAIEmb
-    ChromaEngine <--> ChromaStore
+#### 4. AI Generation Layer
 
-    Pipeline --> Extractors --> Chunker --> EmbeddingFactory --> ChromaStore
-    Registry --> Pipeline
+The AI generation layer combines the user's question, retrieved document context, and prompt instructions to generate a relevant response using the configured language model. The application can include source references alongside the response to help users understand which documents support the answer. Response quality depends on the relevance, accuracy, and currency of the indexed documents.
 
-    ChromaEngine --> Agent
-    Agent --> ContextFence --> OpenAIChat
-    OpenAIChat --> UI_Chat
-    MockCustomer -->|SYNTHETIC DATA BANNER| UI_Chat
-```
+#### 5. Knowledge Ingestion Pipeline
 
-### Component Flow Description
-1. **User Interaction:** The user submits a natural-language query through the light sky blue composer (`#DFEFF7`).
-2. **Security Pre-flight:** Query is stripped of control characters and capped at 1000 characters by `sanitize_user_input()`.
-3. **Intent Classification:** `IntentClassifier` checks for personal policy numbers, regulatory keywords, plan comparison inquiries, or out-of-scope medical diagnostics.
-4. **Vector Retrieval:** If educational or regulatory, `ChromaRetrievalEngine` embeds the query via `text-embedding-3-small` and performs cosine similarity search against `india_health_insurance_kb`.
-5. **Score Thresholding:** Chunks with relevance scores below `0.35` are discarded.
-6. **Prompt Assembly:** Verified chunks are wrapped in XML context fences and injected into the system prompt.
-7. **LLM Generation:** `OpenAIChatService` invokes `gpt-4o-mini` at temperature 0.1 to synthesize an answer.
-8. **Citation Binding:** The orchestrator pairs the answer with structured `Citation` objects and returns the response to the Streamlit UI.
+The ingestion pipeline prepares source documents for retrieval. Approved insurance documents and regulatory guidance are loaded, their text is extracted and divided into smaller chunks, and relevant metadata is attached. The chunks are converted into vector embeddings and indexed in ChromaDB, making their content searchable during subsequent user queries.
 
+This pipeline is separate from the live question-answering flow and is typically executed when the knowledge base needs to be created or updated.
+
+#### 6. Supporting Data Stores and External Dependencies
+
+ChromaDB stores vector embeddings and associated document metadata used for similarity search. Source documents provide the underlying insurance information, while metadata helps preserve document provenance and support source attribution.
+
+External dependencies may include a language model API and an embedding provider or local embedding model, depending on the configured implementation. API credentials should be managed through environment variables or an appropriate secrets-management solution rather than being hardcoded in the source code.
+
+### End-to-End Request Flow
+
+1. **Question submission:** The user submits a health insurance question through the InsureIQ web interface.
+2. **Request processing:** The application receives the question and prepares it for retrieval and response generation.
+3. **Question embedding:** The configured embedding model converts the question into a vector representation.
+4. **Knowledge retrieval:** ChromaDB performs a similarity search and returns relevant document chunks and metadata.
+5. **Context assembly:** The application combines the question, retrieved information, and prompt instructions.
+6. **AI response generation:** The configured language model generates an answer using the supplied context.
+7. **Response presentation:** The application formats the answer and displays available source references to the user.
+
+### Architecture Benefits
+
+- **Modularity:** Separates presentation, orchestration, retrieval, and generation responsibilities.
+- **Grounded responses:** Uses retrieved documents to provide supporting context for AI-generated answers.
+- **Traceability:** Document metadata can help identify the sources behind retrieved information and displayed citations.
+- **Maintainability:** Individual components can be improved without redesigning the entire application.
+- **Extensibility:** Supports future enhancements such as improved retrieval, evaluation, monitoring, authentication, and deployment integrations.
+
+> **Note:** This diagram represents the logical architecture. The actual implementation, configured model providers, available data stores, and enabled integrations should be verified against the current codebase. RAG can reduce unsupported answers, but it does not guarantee that every response is correct. Production use requires reliable source documents, appropriate evaluation, security controls, and ongoing knowledge-base maintenance.
 ---
 
 ## 7. RAG Pipeline Deep Dive
